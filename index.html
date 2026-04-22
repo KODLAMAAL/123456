@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IONMUN'26 - Conference Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #c6c7ae;
+            --secondary: #8b8b7f;
+            --accent: #e8e6e1;
+            --dark-accent: #5a5a52;
+            --text: #1a1a1a;
+            --text-light: #f5f5f5;
+            --cream: #fef9f3;
+            --gold: #2c2419;
+            --bg-main: #e8e6e1;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            background: var(--bg-main);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 32C161.9 32 85.3 78.8 51.6 147.6C35.2 116.8 18.9 113.5 18.9 113.5C18.9 113.5 41.8 154.9 65.9 203.2C55.8 230.5 50 261.5 50 294.7C50 399.8 139.5 481.4 248.8 481.4C345.5 481.4 425.8 418.8 447.4 326H256V32Z" fill="%23000000" opacity="0.06"/></svg>');
+            background-repeat: no-repeat;
+            background-size: 700px 700px;
+            background-position: right 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .background-pattern {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; opacity: 0.03;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><g fill="none" stroke="black" stroke-width="1"><path d="M200 50 Q250 100 200 150 Q150 100 200 50M200 150 Q250 200 200 250 Q150 200 200 150M200 250 Q250 300 200 350 Q150 300 200 250M100 100 Q150 150 100 200 Q50 150 100 100M300 100 Q350 150 300 200 Q250 150 300 100"/></g></svg>');
+            pointer-events: none;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(200, 200, 185, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            border-bottom: 3px solid var(--dark-accent);
+        }
+        
+        .nav-content {
+            max-width: 1400px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .logo-area {
+            display: flex; align-items: center; gap: 1rem;
+        }
+        
+        .logo-img {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+            filter: drop-shadow(0 0 6px rgba(44, 36, 25, 0.4));
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem; font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase; letter-spacing: 3px;
+        }
+        
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        
+        .nav-links a {
+            color: var(--text); text-decoration: none;
+            font-weight: 700; font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            position: relative;
+        }
+        
+        .nav-links a:hover { color: var(--gold); }
+        
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -8px; left: 0;
+            width: 0; height: 2px; background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after { width: 100%; }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh; display: flex;
+            align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding-top: 80px;
+            background: linear-gradient(135deg, rgba(200, 200, 185, 0.98) 0%, rgba(210, 210, 190, 0.98) 100%);
+        }
+        
+        .hero::before {
+            content: ''; position: absolute; top: 0; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(150, 140, 100, 0.3) 0%, transparent 70%);
+            border-radius: 50%; z-index: 0;
+        }
+        
+        .hero::after {
+            content: ''; position: absolute; bottom: 10%; left: -5%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(140, 130, 90, 0.2) 0%, transparent 70%);
+            border-radius: 50%; z-index: 0;
+        }
+        
+        .hero-content {
+            text-align: center; z-index: 10;
+            animation: fadeInUp 1.3s ease; max-width: 900px; position: relative;
+        }
+        
+        .hero-logo-wrap {
+            display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-logo-img {
+            width: 150px; height: 150px; border-radius: 50%;
+            object-fit: cover; border: 3px solid var(--gold);
+            filter: drop-shadow(0 0 12px rgba(44, 36, 25, 0.5));
+        }
+        
+        .hero-tagline {
+            font-size: 1rem; color: var(--text);
+            text-transform: uppercase; letter-spacing: 3px;
+            opacity: 0.95; font-weight: 700;
+        }
+        
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 7rem);
+            font-weight: 700; color: var(--gold);
+            margin: 0.5rem 0; line-height: 1.1;
+            text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 3px 3px 6px rgba(44, 36, 25, 0.5);
+        }
+        
+        .hero-slogan {
+            font-size: 1.6rem; color: var(--text);
+            margin: 1.5rem 0 2rem 0; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; opacity: 0.95;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem; color: var(--text);
+            max-width: 700px; margin: 0 auto 2.5rem;
+            font-weight: 600; opacity: 0.9; line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block; padding: 1.2rem 3.5rem;
+            background: var(--gold); color: var(--text-light);
+            text-decoration: none; font-weight: 700; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            border: 3px solid var(--gold);
+            transition: all 0.4s ease; position: relative; overflow: hidden; 
+            cursor: pointer; border-radius: 2px;
+        }
+        
+        .cta-button::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%; background: var(--bg-main);
+            z-index: -1; transition: left 0.4s ease;
+        }
+        
+        .cta-button:hover { 
+            color: var(--gold); 
+        }
+        
+        .cta-button:hover::before { left: 0; }
+        
+        /* SG Letter */
+        .SG-letter {
+            max-width: 900px; margin: 5rem auto; padding: 3rem;
+            background: rgba(200, 200, 185, 0.98);
+            border: 2px solid var(--dark-accent);
+        }
+        
+        .SG-letter .hero-tagline {
+            color: var(--text); font-size: 0.95rem; text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .LETTER-description {
+            color: var(--text); font-size: 1rem; line-height: 1.9;
+            font-weight: 600;
+        }
+        
+        /* Committees Section */
+        .committees { max-width: 1400px; margin: 6rem auto; padding: 0 2rem; }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem; color: var(--gold);
+            text-align: center; margin-bottom: 4rem;
+            text-transform: uppercase; letter-spacing: 4px;
+            position: relative; padding-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(44, 36, 25, 0.3);
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%); width: 150px; height: 3px;
+            background: linear-gradient(90deg, var(--dark-accent) 0%, var(--gold) 50%, var(--dark-accent) 100%);
+        }
+        
+        .committees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem; margin-bottom: 4rem;
+        }
+        
+        .committee-card {
+            background: rgba(200, 200, 185, 0.98);
+            border: 3px solid var(--dark-accent);
+            position: relative; overflow: hidden;
+            transition: all 0.4s ease; cursor: pointer;
+            aspect-ratio: 1 / 1.2;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 1.5rem;
+        }
+        
+        .committee-card::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(150, 140, 100, 0.15), transparent);
+            transition: left 0.6s ease; z-index: 1;
+        }
+        
+        .committee-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 40px rgba(150, 140, 100, 0.4), inset 0 0 20px rgba(150, 140, 100, 0.1);
+            transform: translateY(-15px) scale(1.02);
+        }
+        
+        .committee-card:hover::before { left: 100%; }
+        
+        .committee-content { position: relative; z-index: 2; }
+        
+        .committee-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem; color: var(--gold);
+            text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(150, 140, 100, 0.5);
+            font-weight: 700;
+        }
+        
+        .committee-status {
+            font-size: 0.9rem; color: var(--text);
+            margin-top: 1rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(200, 200, 185, 0.98);
+            border-top: 3px solid var(--dark-accent);
+            padding: 3.5rem 2rem; text-align: center; margin-top: 6rem;
+        }
+        
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+        
+        .footer-links {
+            display: flex; justify-content: center;
+            gap: 2.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text); text-decoration: none; font-weight: 700;
+            text-transform: uppercase; font-size: 0.85rem;
+            letter-spacing: 1.5px; transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover { color: var(--gold); }
+        
+        .footer-text { 
+            color: var(--text); font-weight: 700; font-size: 0.95rem; 
+            margin: 1rem 0; 
+        }
+        
+        .footer-divider {
+            width: 100px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 2rem auto;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none; position: fixed; z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(100, 100, 80, 0.88);
+            backdrop-filter: blur(5px); animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: rgba(200, 200, 185, 0.98);
+            margin: 5% auto; padding: 2rem;
+            border: 2px solid var(--dark-accent);
+            width: 90%; max-width: 700px;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .close {
+            color: var(--gold); float: right; font-size: 2rem;
+            font-weight: 700; cursor: pointer; transition: color 0.3s ease;
+        }
+        
+        .close:hover { color: var(--text); }
+        
+        .modal-title {
+            color: var(--gold); text-transform: uppercase;
+            font-size: 2rem; margin-bottom: 1.5rem;
+            letter-spacing: 2px; font-weight: 700;
+        }
+        
+        .modal-body {
+            color: var(--text); font-weight: 600; line-height: 1.8;
+        }
+        
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Apply Modal */
+        #applyModal {
+            display: none;
+        }
+        
+        .apply-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 2px solid var(--dark-accent);
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            padding: 1rem 2rem;
+            background: var(--gold);
+            color: var(--text-light);
+            border: 3px solid var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .form-submit:hover {
+            background: var(--bg-main);
+            color: var(--gold);
+        }
+        
+        /* Application Categories */
+        .category-selection {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .category-button {
+            padding: 1.5rem;
+            background: var(--accent);
+            border: 2px solid var(--dark-accent);
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        
+        .category-button:hover {
+            background: var(--gold);
+            color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(44, 36, 25, 0.3);
+        }
+        
+        .hidden-form {
+            display: none;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in-on-scroll {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+            .section-title { font-size: 2.5rem; }
+            .committees-grid { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <div class="logo-area">
+                <img src="IONMUN.png" alt="IONMUN Logo" class="logo-img">
+                <span class="logo">IONMUN'26</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#committees">Committees</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-logo-wrap">
+                <img src="IONMUN.png" alt="IONMUN Logo" class="hero-logo-img">
+            </div>
+            <p class="hero-tagline">Welcome To</p>
+            <h1 class="hero-title">IONMUN'26</h1>
+            <p class="hero-slogan">Timeless Voices for Peace</p>
+            <button class="cta-button" onclick="openApplyModal()">APPLY NOW TO IONMUN'26</button>
+        </div>
+    </section>
+    
+    <section class="SG-letter">
+        <p class="hero-tagline">Letter From Our Secretary General</p>
+        <p class="LETTER-description">
+            <strong>Honourable Participants of IONMUN'26</strong><br><br>
+            As the Secretary General of IONMUN'26, which takes place from the 1st of August to the 3rd of August, I welcome you all to a once in a lifetime experience known as IONMUN.<br><br>
+            Me and our executive board aim to bring together enthusiastic and devoted people eager to experience the best illustration of diplomacy. During the trail we took in this circuit, we have worked so hard and diligently to make this conference a reality. With the knowledge and experience we have gained, we want to lead you on your journey and feel the happiness we did when we were creating this conference.<br><br>
+            With a mix of experience and the enthusiasm of new generation of academic members, we profoundly believe that IONMUN will give you an unprecedented experience for all of the participants of the conference. The sophisticated members of our academic team emit their profound knowledge while even more recent members bring newer concepts and creativity.<br><br>
+            My deepest gratitude goes to our organization team who worked the hardest, our academic team that brings their knowledge to the table and lastly my beloved executive board which consists of Ela Nur Sapmaz, Mustafa Aslan and Can Kurnaz.<br><br>
+            As we assemble let me quote a saying by the greatest leader that this world has ever seen, Mustafa Kemal Atatürk: <br>
+            <em>"Ey Türk gençliği! Birinci vazifen, Türk istiklâlini, Türk Cumhuriyeti'ni, ilelebet muhafaza ve müdafaa etmektir. Mevcudiyetinin ve istikbalinin yegâne temeli budur. Bu temel, senin en kıymetli hazinendir."</em><br><br>
+            To everybody who is excited and keen to take part in my dream, I can't wait to see everybody work tirelessly and embrace such a conference. Fog can't be dispelled by means of a fan. And guided by timeless voices for peace.<br><br>
+            <strong>Sincerely,<br>
+            The Secretary General<br>
+            Doruk Sapmaz</strong>
+        </p>
+    </section>
+    
+    <section class="committees" id="committees">
+        <h2 class="section-title">Our Committees</h2>
+        <div class="committees-grid">
+            <div class="committee-card" onclick="openModal('interpol')">
+                <div class="committee-content">
+                    <img src="INTERPOL.png" alt="INTERPOL" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('unicri')">
+                <div class="committee-content">
+                    <img src="UNICRI.png" alt="UNICRI" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('who')">
+                <div class="committee-content">
+                    <img src="WHO1.png" alt="WHO" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('wipo')">
+                <div class="committee-content">
+                    <img src="WIPO.png" alt="WIPO" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('ecosoc')">
+                <div class="committee-content">
+                    <img src="ECOSOC.png" alt="ECOSOC" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('bucharest')">
+                <div class="committee-content">
+                    <img src="BUCHAREST.png" alt="Treaty of Bucharest" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('manhattan')">
+                <div class="committee-content">
+                    <img src="MANHATTAN.png" alt="The Manhattan Project" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('imperial')">
+                <div class="committee-content">
+                    <img src="IMPERIAL COURT.png" alt="Imperial Court" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('kennedy')">
+                <div class="committee-content">
+                    <img src="KENNEDY.png" alt="John F. Kennedy's Cabinet" style="width: 400px; margin-bottom: 1rem;">
+                </div>
+            </div>
+            <div class="committee-card" onclick="openModal('jcc')">
+                <div class="committee-content">
+                    <img src="JCC.png" alt="JCC: The Three Kingdoms Period" style="width: 300px; margin-bottom: 1rem;">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div id="committeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-body" id="modalBody">
+                <p><strong>Committee Information</strong></p>
+                <p style="font-size: 1.2rem; color: var(--gold); margin-top: 2rem; font-weight: 700;">COMING SOON</p>
+                <p style="font-size: 1rem; margin-top: 1.5rem;"></p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="applyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeApplyModal()">&times;</span>
+            <h2 class="modal-title" id="appTitle">Application Categories</h2>
+            
+            <div id="categorySelection" class="category-selection">
+                <a class="category-button" href="#" >Press - 800TL</a>
+                <a class="category-button" href="https://docs.google.com/forms/d/e/1FAIpQLSc6AO4_iHCpXnPHhdBAATEcfr8tkdVTbHc6KiyCyYqfapXpLw/viewform?usp=sharing&ouid=115059610302949729172">Administrative Staff - 780TL</a>
+                <a class="category-button" href="https://docs.google.com/forms/d/e/1FAIpQLScInBhxUxT3czMod8mF-m6gddrvSFyT5YeILIl9hWXiKWLUjg/viewform?usp=sharing&ouid=115059610302949729172">Individual Delegate - 920TL</a>
+                <a class="category-button" href="https://forms.gle/V6cpi6ULKGrnhaXY6">Delegation - 880TL</a>
+                <a class="category-button" href="#" >Board Member - 800TL</a>
+                <a class="category-button" href="#" >Observer - 940TL</a>
+            </div>
+        </div>
+    </div>           
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#committees">Committees</a>
+                <a href="#apply" onclick="openApplyModal()">Apply</a>
+                <a href="https://www.instagram.com/ionmun26/">Instagram</a>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-text">Ion Model United Nations Conference 2026</p>
+            <p class="footer-text" style="margin-top: 1.5rem;">ionmuns26@gmail.com <br>Secretary General: Doruk Sapmaz
++90530011701
+dorukdoam@gmail.com
+<br>Director General: Ela Nur Sapmaz 
++905418198331 
+elalanur4@gmail.com </br>
+Organization advisor: Can Kurnaz 
++905459994230<br>
+Academic Advisor:Mustafa Aslan
++905324246907 </br></br></p>
+        </div>
+    </footer>
+    
+    <script>
+        const committees = {
+            interpol: {
+                title: "INTERPOL",
+                content: `<p>The International Criminal Police Organization, commonly known as Interpol is an international organization that facilitates worldwide police cooperation and crime control. It is the world’s largest police organization. It is headquartered in Lyon, France, with seven regional bureaus worldwide, and a National Central Bareau in all 195 member states. Today terrorist groups are accommodating their selves to technology by using the internet and online platforms to spread their radical thoughts, correspondingly they are using online web systems to find new victims and group members for their extremist actions. In that case, Interpol with its worldwide police cooperation and crime control mechanism is the United Nations main organ for online terrorism issues.</p><p><strong>Agenda Item:</strong> Online Radicalization and Extremism</p><p><strong>Under-Secretaries General:</strong> Efe Deniz Yağcı, Ramazan Rahmi Özcan</p>`,
+            },
+            unicri: { 
+                title: "UNICRI", 
+                content: `<p>The United Nations Interregional Crime and Justice Research Institute (UNICRI) is an organization specializing in issues related to crime prevention and maintaining the rule of law. UNICRI tackles the challenges associated with national judicial systems by identifying problems with the implementation of local regulations and the impact of interference from other parties. As a result, when there are loopholes in the legal system due to oversight or external pressure, it results in impunity and the rise of transnational crime.
+By providing an opportunity to address these issues using technical means, UNICRI helps ensure that the national judicial process operates autonomously and independently from any manipulation. It encourages the adoption of frameworks that will guarantee effective national enforcement and maintain international security standards.</p><p><strong>Agenda Item:</strong>  Issues arising from countries’ failure to enforce laws adequately or due to external interference during enforcement.</p><p>Under-Secretaries General: Kerem Veysel Düzgün, Hasan Arif Ege Başkurt</p>` 
+            },
+            who: { 
+                title: "WHO", 
+                content: `<p>The World Health Organization (WHO) is a specialized agency of the United Nations (UN) which coordinates responses to international public health issues and emergencies.It is headquartered in Geneva, Switzerland, and has six regional offices and 150 field offices worldwide. Only sovereign states are eligible to join, and it is the largest intergovernmental health organization at the international level.
+
+This committee is made up of delegates representing different countries who work together to develop policies to prevent, manage and reduce NCDs. Key discussion areas often include the promotion of healthier lifestyles, the reduction of risk factors such as tobacco use, alcohol consumption and unhealthy diets, and the improvement of access to healthcare systems and early detection programs. The committee also examines international cooperation, funding mechanisms and public health campaigns to ensure sustainable and equitable solutions.
+
+In the end, the committee wants to develop comprehensive strategies to fight NCDs, including addressing their root causes through education, regulation and global partnerships.</p><p><strong>Agenda Item:</strong> Combating Non-communicable diseases</p><p>Under-Secretary General: Mert Sürücü</p>` 
+            },
+            wipo: { 
+                title: "WIPO", 
+                content: `<p>World Intellectual Property Organization (WIPO) was established in 1970 with the aim of protecting intellectual property rights and ensuring respect for these rights. Based on the 1883 Paris and 1886 Bern Conventions, the organization focuses on establishing international rules for the protection of these rights, creating registration procedures through agreements, generating technical knowledge, and providing support to developing countries. With globalization, the need to harmonize these rights and impose sanctions against violations has increased WIPO’s decisive role worldwide and the interest of states in the organization; in this context, delegates are expected to master the fundamental principles of intellectual property law and develop innovative solutions that fill legal gaps and are compatible with technical developments.
+
+Under the main agenda of the committee, titled “Management of Intellectual Property Rights on Digital Sequence Information (DSI) and Genomic Data Assets,” the complex ownership structure arising from the digitalization of genetic data obtained from biological resources will be addressed.
+
+Delegates should focus on legal mechanisms that ensure the fair sharing of economic benefits arising from the use of digital copies of genetic resources with the source countries, while establishing a delicate balance between the commercialization of these data and the “open access”.</p><p><strong>Agenda Item:</strong> Governing Intellectual Property Rights Over Digital Sequence Information and Genomic Data Assets</p><p>Under-Secretaries General: Esmanur Çapraz, Doruk Şentürk</p>` 
+            },
+            ecosoc: { 
+                title: "ECOSOC", 
+                content: `<p>The United Nations Economic and Social Council (ECOSOC) is one of six principal organs of the United Nations (UN), responsible for coordinating the economic and social fields of the organization, specifically in regards to the fifteen specialized agencies, the eight functional commissions, and the five regional commissions under its jurisdiction.
+
+ECOSOC serves as the central forum for discussing international economic and social issues, and formulating policy recommendations addressed to member states and the United Nations System. It has a rotating membership of 54 countries, and over 1,600 nongovernmental organizations have consultative status with the Council to participate in the work of the United Nations.
+
+The ECOSOC committee will address the topic of how the profit-oriented behavior of large technology corporations, coupled with the process of digitalization, adversely affects the psychological state of young people, causing various issues, including addiction, anxiety, and social isolation. The committee members will analyze the tension between the responsibilities of the companies and their economic needs, government intervention vs. digital freedom, and eventually devise solutions to ensure technological development without harming young people’s welfare.</p><p><strong>Agenda Item:</strong> Addressing the Impact of Big Technology Companies’ Profit-Oriented Practices on Youth, Digitalization and Global Mental Health Crisis.</p><p>Under Secretary General:Baran İnce, Gözde Ümit</p>` 
+            },
+            bucharest: { 
+                title: "TREATY OF BUCHAREST", 
+                content: `<p>The Treaty of Bucharest Committee focuses on the examination of the Treaty of Bucharest, a significant diplomatic agreement signed during a critical period in history. The treaty, inked in 1913, concluded the Second Balkan War and established new territorial boundaries and political arrangements in the Balkans. This committee is dedicated to scrutinizing the content, historical context, motivations, and implications of the Treaty of Bucharest, shedding light on the complex geopolitical dynamics of the time. Participants in this committee will delve into the intricacies of the treaty and explore its far-reaching consequences, providing valuable insights into the historical and geopolitical landscape of the early 20th century.</p><p><strong>Agenda Item:</strong> Open Agenda</p><p>Under Secretary General: Çağan Taylan Özgün
+
+<p>Academic Assistant: Ada Çakmak</p></p>` 
+            },
+            manhattan: { 
+                title: "THE MANHATTAN PROJECT", 
+                content: `<p>The Manhattan project was a top secret United States government project to exploit the newly recognized fission process for military advantage that is the atom bomb during the Second World War. The final crop of the project, two bombs dropped on Japan in 1945, remains one of the most important and brutal historical event in the 20th century.
+
+In August 1939, Einstein,
+with the help of Hungarian émigré physicist Leo Szilard, wrote a letter to President
+Roosevelt, informing him that recent research showed that a chain reaction in a large
+mass of uranium could generate vast amounts of power. This could conceivably lead,
+Einstein wrote, to the construction of “extremely powerful bombs.”Later on Rosevelt carefully invested to the idea through limited initial federal funding for isotope separation and chain reaction research. No one knew at the time if a bomb of such power could be produced in time to effect the outcome of the war. But with the Pearl Harbor attacks in 1942 making USA officially join the World War II, the decision was made to proceed with a full scale program to build
+an atomic bomb despite all the uncertanties. Massive amounts of research, experimentations and calculations were done on a variety of materials and processes with a vast array of top scientists both from the United States and refugee scientists.
+
+In the committee, delegates will give life to the Manhattan Project with all it’s complexities. In the dynamic atmosphere of the World War II, it is up to you whether you thrive as nation or get overwhelmed by the threats and difficulties.</p><p><strong>Agenda Item:</strong> Open Agenda<p>Under Secretary General: Kuzey Karlık
+
+<p>Academic Assistant:Efe Koçoğlu</p></p>` 
+            },
+            imperial: { 
+                title: "IMPERIAL COURT", 
+                content: `<p>Imperial Court
+The Imperial Court is set in the final decades of the Tokugawa Shogunate, a period consisting both the growing internal tension and external pressure. While political authority largely depends on the shogunate, the Imperial Court in Kyoto remains a critical center of legitimacy, tradition and influence. Court nobles, alongside aligned samurai and political actors, plays an increasingly active role.
+With the arrival of Western powers and the erosion of Japan’s long-standing isolation policy, the country faces decisions that challenge its political structure and social hierarchy. Some support maintaining the already existing order and limiting foreign influence, while others argue for reform in response to changing global dynamics.
+
+The direction Japan takes will depend on collaboration , political judgment, and an understanding of the limits and possibilities of the time in this committee.
+</p><p><strong>Agenda Item:</strong> Deliberations on Foreign Influence and the Future of Japan<p>Under Secretary General: Nehir Doğu
+
+<p>Academic Assistant: Ata Yankı Kılınç</p></p>` 
+            },
+            kennedy: { 
+                title: "JFK CABINET", 
+                content: `<p>The year is 1961, and the air in the West Wing is thick with the scent of expensive tobacco and the quiet hum of a crisis always in the making. We operate under the shadow of the Berlin Wall a stark reminder of the President’s observation that while “freedom has many difficulties and democracy is not perfect, but we have never had to put a wall up to keep our people in, to prevent them from leaving us.” Your job isn’t to sit through dry reports; it’s to navigate the friction between JFK’s soaring rhetoric and the gritty, often ugly reality of Cold War realpolitik. You’ll be trading blows over nuclear strategy one hour and scrambling to suppress a domestic firestorm the next. It’s a fast paced, intellectual dogfight where the “best and the brightest” must decide if they can actually lead a free world, or if they’re just polished men in suits waiting for the clock to run out. May God bless us all and May God bless the United States of America!</p><p><strong>Agenda Item:</strong> Open Agenda<p>Under Secretary General: Derin Akyürek
+
+<p>Academic Assistant: Çağın Orkan Benzeş & Kaan Muştu</p></p>` 
+            },
+            jcc: { 
+                title: "JCC: THREE KINGDOMS", 
+                content: `<p>As the Han Dynasty crumbles, China is divided among three rising powers: Wei, Shu, and Wu. In this 3-cabinet JCC you’ll step into a completely different era.
+
+You’ll lead your faction through complex political struggles, you’ll command armies on the battlefield, and negotiate alliances that could either secure your dominance (or lead to your downfall). With interconnected cabinets and a continuous crisis storyline, every move you make will directly impact the fate of the others.
+
+Do not forget: The Mandate of Heaven is not given, it is taken…</p><p><strong>Agenda Item:</strong> The Three Kingdoms Period</p><p>Under Secretaries General: Güney Deniz Ala, Melikhan Demirkıran, Metehan Yıldırım</p>` 
+            }
+        };
+        
+        function openModal(committeeId) {
+            const modal = document.getElementById('committeeModal');
+            document.getElementById('modalTitle').innerHTML = committees[committeeId].title;
+            document.getElementById('modalBody').innerHTML = committees[committeeId].content;
+            modal.style.display = 'block';
+        }
+        
+        function closeModal() { 
+            document.getElementById('committeeModal').style.display = 'none'; 
+        }
+        
+        function openApplyModal() {
+            document.getElementById('applyModal').style.display = 'block';
+        }
+        
+        function closeApplyModal() {
+            document.getElementById('applyModal').style.display = 'none';
+            // Reset form
+            document.getElementById('applicationForm').reset();
+            // Show category selection again
+            document.getElementById('categorySelection').style.display = 'grid';
+            document.getElementById('applicationForm').classList.add('hidden-form');
+            document.getElementById('appTitle').textContent = 'Application Categories';
+        }
+        
+        function selectCategory(category) {
+            const categoryNames = {
+                'press': 'Press',
+                'admin': 'Administrative Staff',
+                'delegate': 'Individual Delegate',
+                'delegation': 'Delegation',
+                'board': 'Board Member',
+                'observer': 'Observer'
+            };
+            
+            // Hide category selection
+            document.getElementById('categorySelection').style.display = 'none';
+            
+            // Show application form
+            document.getElementById('applicationForm').classList.remove('hidden-form');
+            document.getElementById('appTitle').textContent = 'Apply as ' + categoryNames[category];
+            
+            // Store selected category
+            document.getElementById('applicationForm').setAttribute('data-category', category);
+        }
+        
+        function handleApplySubmit(event) {
+            event.preventDefault();
+            const category = document.getElementById('applicationForm').getAttribute('data-category');
+            const categoryNames = {
+                'press': 'Press',
+                'admin': 'Administrative Staff',
+                'delegate': 'Individual Delegate',
+                'delegation': 'Delegation',
+                'board': 'Board Member',
+                'observer': 'Observer'
+            };
+            alert('Thank you for your application as ' + categoryNames[category] + '! We will review your submission and get back to you soon.');
+            closeApplyModal();
+        }
+        
+        window.onclick = function(event) {
+            const committeeModal = document.getElementById('committeeModal');
+            const applyModal = document.getElementById('applyModal');
+            if (event.target == committeeModal) {
+                committeeModal.style.display = 'none';
+            }
+            if (event.target == applyModal) {
+                applyModal.style.display = 'none';
+            }
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-on-scroll');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+        
+        document.querySelectorAll('.committee-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
