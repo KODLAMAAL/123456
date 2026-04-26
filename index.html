@@ -30,18 +30,27 @@
         }
         
         body::before {
-            content: '';
+            content: '外\A交\A を\A通\Aじ\Aて\A世\A界\Aの\A平\A和\Aと\A発\A展\Aの\Aた\Aめ\Aに\A共\Aに\A歩\Aむ';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 32C161.9 32 85.3 78.8 51.6 147.6C35.2 116.8 18.9 113.5 18.9 113.5C18.9 113.5 41.8 154.9 65.9 203.2C55.8 230.5 50 261.5 50 294.7C50 399.8 139.5 481.4 248.8 481.4C345.5 481.4 425.8 418.8 447.4 326H256V32Z" fill="%23000000" opacity="0.06"/></svg>');
-            background-repeat: no-repeat;
-            background-size: 700px 700px;
-            background-position: right 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #000000;
+            opacity: 0.04;
+            white-space: pre;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 3rem;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             pointer-events: none;
             z-index: -1;
+            font-family: 'Yu Gothic', 'Hiragino Sans', sans-serif;
         }
         
         .background-pattern {
@@ -170,10 +179,26 @@
         }
         
         .hero::before {
-            content: ''; position: absolute; top: 0; right: -10%;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(150, 140, 100, 0.3) 0%, transparent 70%);
-            border-radius: 50%; z-index: 0;
+            content: '外\A交\A を\A通\Aじ\Aて\A世\A界\Aの\A平\A和\Aと\A発\A展\Aの\Aた\Aめ\Aに\A共\Aに\A歩\Aむ';
+            position: absolute;
+            top: 0;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #000000;
+            opacity: 0.05;
+            white-space: pre;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 2rem;
+            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 0;
+            font-family: 'Yu Gothic', 'Hiragino Sans', sans-serif;
         }
         
         .hero::after {
