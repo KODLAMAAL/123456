@@ -294,6 +294,25 @@
         }
         
         .cta-button:hover::before { left: 0; }
+
+        /* Butonları yan yana getiren ve ortalayan yeni kapsayıcı */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;          /* Butonların arasındaki boşluk */
+            flex-wrap: wrap;    /* Mobilde ekran daralırsa taşmayı önler */
+            margin-top: 25px;   /* Üstteki başlıkla olan mesafe */
+        }
+
+        /* Mevcut kodunuza ek olarak yükseklik ve hizalamayı eşitleyecek küçük düzeltme */
+        .cta-button {
+            box-sizing: border-box; /* Kenarlıkları genişliğe dahil eder, boyutları eşitler */
+            white-space: nowrap;    /* Metinlerin buton içinde alt alta kırılmasını önler */
+            display: inline-flex;   /* dikeyde yazıları kusursuz ortalamak için inline-block yerine tercih edilir */
+            align-items: center;
+        }
+
         
         /* SG Letter */
         .SG-letter {
@@ -608,8 +627,7 @@
             <h1 class="hero-title">IONMUN'26</h1>
             <p class="hero-slogan">Timeless Voices for Peace</p>
             <button class="cta-button" onclick="openApplyModal()">APPLY NOW TO IONMUN'26</button>
-            <a href="https://the-seven-gates-of-kyoto.vercel.app/" class="cta-button" style="text-decoration: none; display: inline-block;">The Seven Gates of Kyoto</a>
-
+            <a href="https://the-seven-gates-of-kyoto.vercel.app/" class="cta-button" target="_blank">THE SEVEN GATES OF KYOTO</a>
         </div>
     </section>
     
