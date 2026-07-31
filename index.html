@@ -94,6 +94,31 @@
             color: var(--gold);
             text-transform: uppercase; letter-spacing: 3px;
         }
+        .kahverengi-buton {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #5C4033; /* Koyu kahverengi tonu */
+  color: #FFFFFF; /* Beyaz yazı rengi */
+  text-decoration: none; /* Alt çizgiyi kaldırır */
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px; /* Köşeleri oval yapar */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Geçiş efekti */
+}
+
+/* Fareyle üzerine gelindiğinde (Hover durumu) */
+.kahverengi-buton:hover {
+  background-color: #4A3329; /* Daha koyu kahverengi */
+  transform: translateY(-2px); /* Butonu hafif yukarı kaldırır */
+}
+
+/* Butona tıklandığında (Active durumu) */
+.kahverengi-buton:active {
+  transform: translateY(0); /* Eski konumuna getirir */
+}
+
         
         .nav-links { display: flex; gap: 3rem; list-style: none; }
         
@@ -655,19 +680,19 @@
             <div class="committee-card" onclick="openModal('unicri')">
                 <div class="committee-content">
                     <img src="UNICRI.png" alt="UNICRI" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="IONMUN'2026 UNICRI Study Guide.pdf" download="IONMUN'2026 UNICRI Study Guide.pdf">STUDY GUIDE</a>
+                    <a href="IONMUN'2026 UNICRI Study Guide.pdf" download="IONMUN'2026 UNICRI Study Guide.pdf" class="kahverengi-buton">STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('who')">
                 <div class="committee-content">
                     <img src="fwho.png" alt="F-WHO" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="IONMUN'26 F-WHO.pdf" download="IONMUN'26 F-WHO.pdf">STUDY GUIDE</a>
+                    <a href="IONMUN'26 F-WHO.pdf" download="IONMUN'26 F-WHO.pdf" class="kahverengi-buton" >STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('wipo')">
                 <div class="committee-content">
                     <img src="WIPO.png" alt="WIPO" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="WIPO GUIDE.pdf" download="WIPO GUIDE.pdf">STUDY GUIDE</a>
+                    <a href="WIPO GUIDE.pdf" download="WIPO GUIDE.pdf" class="kahverengi-buton" >STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('ecosoc')">
@@ -678,19 +703,19 @@
             <div class="committee-card" onclick="openModal('manhattan')">
                 <div class="committee-content">
                     <img src="MANHATTAN.png" alt="The Manhattan Project" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="Ionmun’26 Manhattan Project Study Guide.pdf" download="Ionmun’26 Manhattan Project Study Guide.pdf">STUDY GUIDE</a>
+                    <a href="Ionmun’26 Manhattan Project Study Guide.pdf" download="Ionmun’26 Manhattan Project Study Guide.pdf" class="kahverengi-buton" >STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('imperial')">
                 <div class="committee-content">
                     <img src="IMPERIAL COURT.png" alt="Imperial Court" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="IONMUN'26 Imperial Court Study Guide.pdf" download="IONMUN'26 Imperial Court Study Guide.pdf">STUDY GUIDE</a>
+                    <a href="IONMUN'26 Imperial Court Study Guide.pdf" download="IONMUN'26 Imperial Court Study Guide.pdf" class="kahverengi-buton" >STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('kennedy')">
                 <div class="committee-content">
                     <img src="KENNEDY.png" alt="John F. Kennedy's Cabinet" style="width: 300px; margin-bottom: 1rem;">
-                    <a href="IONYA İÇİN GUIDE.pdf" download="IONYA İÇİN GUIDE.pdf">STUDY GUIDE</a>
+                    <a href="IONYA İÇİN GUIDE.pdf" download="IONYA İÇİN GUIDE.pdf" class="kahverengi-buton" >STUDY GUIDE</a>
                 </div>
             </div>
             <div class="committee-card" onclick="openModal('jcc')">
